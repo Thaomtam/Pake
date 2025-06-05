@@ -138,12 +138,6 @@ jobs:
           jq '.user_agent.windows = "${{ inputs.user_agent }}"' src-tauri/pake.json > src-tauri/pake.json.tmp && mv src-tauri/pake.json.tmp src-tauri/pake.json
         shell: bash
 
-      - name: Update proxy_url in pake.json
-        if: inputs.proxy_url != ''
-        run: |
-          jq '.proxy_url = "${{ inputs.proxy_url }}"' src-tauri/pake.json > src-tauri/pake.json.tmp && mv src-tauri/pake.json.tmp src-tauri/pake.json
-        shell: bash
-
       - name: Build with pake-cli
         run: |
           node ./script/build_with_pake_cli.js
@@ -151,12 +145,10 @@ jobs:
           URL: ${{ inputs.url }}
           NAME: ${{ inputs.name }}
           ICON: ${{ inputs.icon }}
-          HEIGHT: ${{ inputs.height }}
-          WIDTH: ${{ inputs.width }}
-          HIDE_TITLE_BAR: ${{ inputs.hide_title_bar }}
-          FULLSCREEN: ${{ inputs.fullscreen }}
+          WINDOW_CONFIG: ${{ inputs.window_config }}
           MULTI_ARCH: ${{ inputs.multi_arch }}
           TARGETS: ${{ inputs.targets }}
+          PROXY_URL: ${{ inputs.proxy_url }}
           PKG_CONFIG_PATH: /usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
           PKG_CONFIG_ALLOW_SYSTEM_LIBS: 1
           PKG_CONFIG_ALLOW_SYSTEM_CFLAGS: 1
