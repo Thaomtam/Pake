@@ -52,6 +52,14 @@ on:
           - 'deb'
           - 'appimage'
           - 'rpm'
+      identifier:
+        description: 'Application Identifier, Optional, e.g., com.yourcompany.yourapp'
+        required: false
+        default: ''
+      user_agent:
+        description: 'Custom User-Agent for Windows, Optional'
+        required: false
+        default: ''
 
 jobs:
   build:
@@ -119,6 +127,26 @@ jobs:
         run: |
           npm install shelljs
           npm install axios
+
+      - name: Install jq (Linux)
+        if: inputs.platform == 'ubuntu-24.04'
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Install jq (Windows)
+        if: inputs.platform == 'windows-latest'
+        run: choco install jq
+
+      - name: Update identifier in tauri.conf.json
+        if: inputs.identifier != ''
+        run: |
+          jq '.package.identifier = "${{ inputs.identifier }}"' src-tauri/tauri.conf.json > src-tauri/tauri.conf.json.tmp && mv src-tauri/tauri.conf.json.tmp src-tauri/tauri.conf.json
+        shell: bash
+
+      - name: Update user_agent in pake.json (Windows only)
+        if: inputs.user_agent != '' && inputs.platform == 'windows-latest'
+        run: |
+          jq '.user_agent.windows = "${{ inputs.user_agent }}"' src-tauri/pake.json > src-tauri/pake.json.tmp && mv src-tauri/pake.json.tmp src-tauri/pake.json
+        shell: bash
 
       - name: Build with pake-cli
         run: |
