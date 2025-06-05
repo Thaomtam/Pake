@@ -23,7 +23,7 @@ const windowConfig = JSON.parse(process.env.WINDOW_CONFIG || '{}');
 let params = `node cli.js ${process.env.URL} --name ${process.env.NAME}`;
 
 if (process.env.PROXY_URL && process.env.PROXY_URL !== '') {
-  params = `${params} --proxy ${process.env.PROXY_URL}`;
+  params = `${params} --proxy-url ${process.env.PROXY_URL}`;
 }
 
 if (windowConfig.width) {
