@@ -20,24 +20,10 @@ on:
       icon:
         description: 'Icon, Image URL, Optional'
         required: false
-      width:
-        description: 'Width, Optional'
+      window_config:
+        description: 'Window configuration (JSON string), e.g., {"width": 1200, "height": 780, "fullscreen": false, "hide_title_bar": false}'
         required: false
-        default: '1200'
-      height:
-        description: 'Height, Optional'
-        required: false
-        default: '780'
-      fullscreen:
-        description: 'Fullscreen, At startup, Optional'
-        required: false
-        type: boolean
-        default: false
-      hide_title_bar:
-        description: 'Hide TitleBar, MacOS only, Optional'
-        required: false
-        type: boolean
-        default: false
+        default: '{"width": 1200, "height": 780, "fullscreen": false, "hide_title_bar": false}'
       multi_arch:
         description: 'MultiArch, MacOS only, Optional'
         required: false

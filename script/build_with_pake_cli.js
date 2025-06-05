@@ -11,22 +11,26 @@ console.log('Pake parameters is: ');
 console.log('url: ', process.env.URL);
 console.log('name: ', process.env.NAME);
 console.log('icon: ', process.env.ICON);
-console.log('height: ', process.env.HEIGHT);
-console.log('width: ', process.env.WIDTH);
-console.log('fullscreen: ', process.env.FULLSCREEN);
-console.log('hide-title-bar: ', process.env.HIDE_TITLE_BAR);
+console.log('window_config: ', process.env.WINDOW_CONFIG);
 console.log('is multi arch? only for Mac: ', process.env.MULTI_ARCH);
 console.log('targets type? only for Linux: ', process.env.TARGETS);
 console.log('===========================\n');
 
 cd('node_modules/pake-cli');
-let params = `node cli.js ${process.env.URL} --name ${process.env.NAME} --height ${process.env.HEIGHT} --width ${process.env.WIDTH}`;
 
-if (process.env.HIDE_TITLE_BAR === 'true') {
+const windowConfig = JSON.parse(process.env.WINDOW_CONFIG || '{}');
+let params = `node cli.js ${process.env.URL} --name ${process.env.NAME}`;
+
+if (windowConfig.width) {
+  params = `${params} --width ${windowConfig.width}`;
+}
+if (windowConfig.height) {
+  params = `${params} --height ${windowConfig.height}`;
+}
+if (windowConfig.hide_title_bar === true) {
   params = `${params} --hide-title-bar`;
 }
-
-if (process.env.FULLSCREEN === 'true') {
+if (windowConfig.fullscreen === true) {
   params = `${params} --fullscreen`;
 }
 
