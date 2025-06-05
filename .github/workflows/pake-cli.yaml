@@ -46,6 +46,10 @@ on:
         description: 'Custom User-Agent for Windows, Optional'
         required: false
         default: ''
+      proxy_url:
+        description: 'Proxy URL (e.g., http://user:pass@host:port), Optional'
+        required: false
+        default: ''
 
 jobs:
   build:
@@ -132,6 +136,12 @@ jobs:
         if: inputs.user_agent != '' && inputs.platform == 'windows-latest'
         run: |
           jq '.user_agent.windows = "${{ inputs.user_agent }}"' src-tauri/pake.json > src-tauri/pake.json.tmp && mv src-tauri/pake.json.tmp src-tauri/pake.json
+        shell: bash
+
+      - name: Update proxy_url in pake.json
+        if: inputs.proxy_url != ''
+        run: |
+          jq '.proxy_url = "${{ inputs.proxy_url }}"' src-tauri/pake.json > src-tauri/pake.json.tmp && mv src-tauri/pake.json.tmp src-tauri/pake.json
         shell: bash
 
       - name: Build with pake-cli
