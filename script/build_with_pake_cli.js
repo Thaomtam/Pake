@@ -14,17 +14,12 @@ console.log('icon: ', process.env.ICON);
 console.log('window_config: ', process.env.WINDOW_CONFIG);
 console.log('is multi arch? only for Mac: ', process.env.MULTI_ARCH);
 console.log('targets type? only for Linux: ', process.env.TARGETS);
-console.log('proxy_url: ', process.env.PROXY_URL);
 console.log('===========================\n');
 
 cd('node_modules/pake-cli');
 
 const windowConfig = JSON.parse(process.env.WINDOW_CONFIG || '{}');
 let params = `node cli.js ${process.env.URL} --name ${process.env.NAME}`;
-
-if (process.env.PROXY_URL && process.env.PROXY_URL !== '') {
-  params = `${params} --proxy-url ${process.env.PROXY_URL}`;
-}
 
 if (windowConfig.width) {
   params = `${params} --width ${windowConfig.width}`;
