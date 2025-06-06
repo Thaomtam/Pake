@@ -87,7 +87,7 @@ const main = async () => {
   if (!fs.existsSync('output')) {
     fs.mkdirSync('output');
   }
-  mv(`${process.env.NAME}.*`, 'output/');
+  mv(`${process.env.NAME}_*.msi`, 'output/');
   console.log('Build Success');
   cd('../..');
 };

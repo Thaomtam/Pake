@@ -134,6 +134,11 @@ jobs:
           jq '.user_agent.windows = "${{ inputs.user_agent }}"' src-tauri/pake.json > src-tauri/pake.json.tmp && mv src-tauri/pake.json.tmp src-tauri/pake.json
         shell: bash
 
+      - name: Print pake.json content
+        if: inputs.platform == 'windows-latest'
+        run: cat src-tauri/pake.json
+        shell: bash
+
       - name: Build with pake-cli
         run: |
           node ./script/build_with_pake_cli.js
