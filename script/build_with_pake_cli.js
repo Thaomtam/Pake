@@ -34,6 +34,10 @@ if (windowConfig.fullscreen === true) {
   params = `${params} --fullscreen`;
 }
 
+if (process.env.USER_AGENT && process.env.USER_AGENT !== '') {
+  params = `${params} --user-agent "${process.env.USER_AGENT}"`;
+}
+
 if (process.env.MULTI_ARCH === 'true') {
   exec('rustup target add aarch64-apple-darwin');
   params = `${params} --multi-arch`;
